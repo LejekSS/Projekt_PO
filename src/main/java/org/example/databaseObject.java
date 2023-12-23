@@ -1,15 +1,22 @@
 package org.example;
 
-public class databaseObject {
+public abstract class databaseObject {
     private String name;
     private int id;
     private long date;
     private static int lastID = 0;
 
-    public databaseObject(String name, long date) {
+    public databaseObject(String name) {
         this.name = name;
         this.id = ++lastID;
-        this.date = date;
+        this.date = System.currentTimeMillis();;
+    }
+
+    @Override
+    public String toString() {
+        return  "id= " + id +
+                ", name= '" + name + '\'' +
+                ", date= " + date;
     }
 
     public String getName() {
@@ -30,10 +37,6 @@ public class databaseObject {
 
     public long getDate() {
         return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
     }
 
     public static int getLastID() {

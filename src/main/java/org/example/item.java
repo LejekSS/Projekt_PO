@@ -7,8 +7,8 @@ public abstract class item extends databaseObject{
     private int length;
     private literaryGenres genre;
 
-    public item(String name, long date, String title, String author, int publictionDate, int length, literaryGenres genre) {
-        super(name, date);
+    public item(String name, String title, String author, int publictionDate, int length, literaryGenres genre) {
+        super(name);
         this.title = title;
         this.author = author;
         this.publictionDate = publictionDate;
@@ -54,5 +54,16 @@ public abstract class item extends databaseObject{
 
     public void setGenre(literaryGenres genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publictionDate=" + publictionDate +
+                ", length=" + length +
+                ", genre=" + genre
+                ;
     }
 }
