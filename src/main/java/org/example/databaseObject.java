@@ -9,7 +9,7 @@ public abstract class databaseObject {
     public databaseObject(String name) {
         this.name = name;
         this.id = ++lastID;
-        this.date = System.currentTimeMillis();;
+        this.date = System.currentTimeMillis();
     }
 
     @Override

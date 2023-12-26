@@ -1,6 +1,25 @@
 package org.example;
 
+import java.util.Scanner;
+
 public abstract class item extends databaseObject{
+    public static literaryGenres setGenre() {
+        Scanner scanner = new Scanner(System.in);
+        literaryGenres genre = null;
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("Podaj gatunek literacki:");
+            String userInput = scanner.nextLine().trim();
+            try {
+                genre = literaryGenres.valueOf(userInput.toUpperCase());
+                isValid = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Podano nieprawidłowy gatunek literacki.");
+            }
+        }
+
+        return genre;
+    }
     private String title;
     private String author;
     private int publictionDate;
@@ -52,10 +71,6 @@ public abstract class item extends databaseObject{
         return genre;
     }
 
-    public void setGenre(literaryGenres genre) {
-        this.genre = genre;
-    }
-
     @Override
     public String toString() {
         return super.toString() +
@@ -66,4 +81,6 @@ public abstract class item extends databaseObject{
                 ", genre=" + genre
                 ;
     }
+
+
 }
