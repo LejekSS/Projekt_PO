@@ -144,6 +144,16 @@ public class Main {
         }
         waitForAction();
     }
+    public static void rentMenu(){
+        System.out.println("---------------------------------------");
+        System.out.println("158093 | 2 rok 3 semestr | PO - projekt");
+        System.out.println("------------------Menu-----------------");
+        System.out.println("1. Wypożycz książkę");
+        System.out.println("2. Zwróć książke");
+        System.out.println("3. Wypożycz audiobook");
+        System.out.println("4. Zwróć audiobook");
+        System.out.println("5. Cofnij");
+    }
     public static void displayObjectsByType(Class<?> type) {
         List<databaseObject> temp = database.stream()
                 .filter(obj -> type.isAssignableFrom(obj.getClass()))
@@ -187,17 +197,18 @@ public class Main {
     public static void main(String[] args) {
         int i;
         for (i = 1; i <= 5; i++) {
-            database.add(new book("Book" + i, "Author" + i, 2023, 200, 10, literaryGenres.SAMOPOMOC, "ISBN" + i));
+            database.add(new book("Book" + i, "Author" + i, 2023, 200, i, literaryGenres.SAMOPOMOC, "ISBN" + i));
         }
+
 
         // Add 5 audiobooks
         for (i = 1; i <= 5; i++) {
-            database.add(new audiobook("Audiobook" + i, "Author" + i, 2023, 180, literaryGenres.KOMEDIA, 10.5f));
+            database.add(new audiobook("Audiobook" + i, "Author" + i, 2023, 180, literaryGenres.KOMEDIA, 10));
         }
 
         // Add 5 employees
         for (i = 1; i <= 5; i++) {
-            database.add(new employee("Employee" + i, genders.MĘŻCZYZNA, 30, "ID" + i, workplaces.ASYSTENT_BIBLIOTEKARZA, 50000));
+            database.add(new employee("Employee" + i, genders.MEZCZYZNA, 30, "ID" + i, workplaces.ASYSTENT_BIBLIOTEKARZA, 50000));
         }
 
         // Add 5 clients
@@ -265,7 +276,49 @@ public class Main {
                 case "5": //Wyświetalnie elemenetów z ciągiem znaków w nazwie
                     displayObjectsByNameContains(getUserInput("Podaj ciąg znaków: "));
                     break;
-                case "6": //Operacja z interfejstu - w trakcie
+                case "6": //Operacja z interfejstu
+                    rentMenu();
+                    switch (getUserInput("Wybierz opcje:")){
+                        case "1":
+                            int clientId = getUserInputIntiger("Podaj ID klienta: ");
+                            int bookId = getUserInputIntiger("Podaj ID książki do wypożyczenia: ");
+
+                            if (clientId >= 0 && clientId < database.size() && bookId >= 0 && bookId < database.size()) {
+                                if (database.get(clientId) instanceof client && database.get(bookId) instanceof book) {
+                                    client client = (client) database.get(clientId);
+                                    book book = (book) database.get(bookId);
+
+                                    book.rentItem(client,book.getId());
+                                } else {
+                                    System.out.println("Podano nieprawidłowe ID klienta lub książki.");
+                                }
+                            } else {
+                                System.out.println("Podano nieprawidłowe ID klienta lub książki.");
+                            }
+                            break;
+                        case "2":
+                            int clientId2 = getUserInputIntiger("Podaj ID klienta: ");
+                            int bookId2 = getUserInputIntiger("Podaj ID książki do zwrotu: ");
+
+                            if (clientId2 >= 0 && clientId2 < database.size() && bookId2 >= 0 && bookId2 < database.size()) {
+                                if (database.get(clientId2) instanceof client && database.get(bookId2) instanceof book) {
+                                    client client = (client) database.get(clientId2);
+                                    book book = (book) database.get(bookId2);
+                                    book.returnItem(client, book);
+                                } else {
+                                    System.out.println("Podano nieprawidłowe ID klienta lub książki.");
+                                }
+                            } else {
+                                System.out.println("Podano nieprawidłowe ID klienta lub książki.");
+                            }
+                            break;
+                        case "5":
+                            break;
+                        default: //Obsługa błędu
+                        System.out.println("Nieprawidlowa opcja");
+                        break;
+                    }
+
                     break;
                 case "7": //Zakończ
                     isRunning = false;

@@ -29,7 +29,7 @@ public abstract class databaseObject {
         this.name = name;
     }
 
-    public int getId() {
+    protected int getId() {
         return id;
     }
 

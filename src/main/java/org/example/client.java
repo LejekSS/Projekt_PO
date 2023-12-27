@@ -3,6 +3,10 @@ package org.example;
 import java.util.Arrays;
 
 public class client extends person{
+    public void setRented(int[] rented) {
+        this.rented = rented;
+    }
+
     private int[] rented;
 
     public int[] getRented() {
