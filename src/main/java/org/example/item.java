@@ -8,7 +8,7 @@ public abstract class item extends databaseObject{
         literaryGenres genre = null;
         boolean isValid = false;
         while (!isValid) {
-            System.out.println("Podaj gatunek literacki:");
+            System.out.println("Podaj gatunek literacki: ");
             String userInput = scanner.nextLine().trim();
             try {
                 genre = literaryGenres.valueOf(userInput.toUpperCase());
@@ -20,27 +20,17 @@ public abstract class item extends databaseObject{
 
         return genre;
     }
-    private String title;
     private String author;
     private int publictionDate;
     private int length;
     private literaryGenres genre;
 
-    public item(String name, String title, String author, int publictionDate, int length, literaryGenres genre) {
+    public item(String name, String author, int publictionDate, int length, literaryGenres genre) {
         super(name);
-        this.title = title;
         this.author = author;
         this.publictionDate = publictionDate;
         this.length = length;
         this.genre = genre;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getAuthor() {
@@ -74,7 +64,6 @@ public abstract class item extends databaseObject{
     @Override
     public String toString() {
         return super.toString() +
-                ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", publictionDate=" + publictionDate +
                 ", length=" + length +

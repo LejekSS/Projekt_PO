@@ -3,8 +3,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Main {
     static List<databaseObject> database = new ArrayList<>();
     public static void mainMenu(){
@@ -18,7 +16,6 @@ public class Main {
         System.out.println("5. Wyswietl obiekty o podanym ciągu znaków w nazwie");
         System.out.println("6. Operacja zawarta w interfejsie");
         System.out.println("7. Zakończ");
-        System.out.print("Wybrana akcja: ");
     }
     private static String getUserInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
@@ -55,7 +52,6 @@ public class Main {
         System.out.println("3. Nowa książka");
         System.out.println("4. Nowy audiobook");
         System.out.println("5. Cofnij");
-        System.out.print("Wybrana akcja: ");
     }
     public static void displayObjectByTypeMenu(){
         System.out.println("---------------------------------------");
@@ -66,33 +62,70 @@ public class Main {
         System.out.println("3. Książka");
         System.out.println("4. Audiobook");
         System.out.println("5. Cofnij");
-        System.out.print("Wybrana akcja: ");
     }
     public static void waitForAction(){
-        System.out.println("Naciśnij dowolny przycisk, aby kontynuować...");
+        System.out.println("Naciśnij ENTER, aby kontynuować...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    public static void newElement(int type){
-        String name = getUserInput("Podaj nazwę książki:");
-        String title = getUserInput("Podaj tytuł książki:");
-        String author = getUserInput("Podaj autora książki:");
-        int publicationDate = getUserInputIntiger("Podaj rok publikacji: ");
-        int length = getUserInputIntiger("Podaj ilość stron: ");
-        switch (type){
+    public static void newElement(int type) {
+        switch (type) {
             case 1:
+                try {
+                    database.add(new client(
+                            getUserInput("Podaj imię i nazwisko:"),
+                            person.setGender(),
+                            getUserInputIntiger("Podaj wiek: "),
+                            getUserInput("Podaj numer karty: ")));
+                    System.out.println("Pomyślnie dodano obiekt do bazy");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Coś poszło nie tak: " + ex);
+                }
                 break;
             case 2:
+                try {
+                    database.add(new employee(
+                            getUserInput("Podaj imię i nazwisko:"),
+                            person.setGender(),
+                            getUserInputIntiger("Podaj wiek: "),
+                            getUserInput("Podaj numer karty: "),
+                            employee.setPosition(),
+                            getUserInputIntiger("Podaj wynagrodzenie: ")));
+                    System.out.println("Pomyślnie dodano obiekt do bazy");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Coś poszło nie tak: " + ex);
+                }
                 break;
             case 3:
-                String ISBN = getUserInput("Podaj numer ISBN: ");
-                database.add(new book(name,title,author,publicationDate,length,item.setGenre(),ISBN));
+                try {
+                    database.add(new book(
+                            getUserInput("Podaj nazwę książki:"),
+                            getUserInput("Podaj autora:"),
+                            getUserInputIntiger("Podaj rok publikacji: "),
+                            getUserInputIntiger("Podaj ilość stron: "),
+                            getUserInputIntiger("Podaj ilość egzemplarzy: "),
+                            item.setGenre(),
+                            getUserInput("Podaj numer ISBN:")));
+                    System.out.println("Pomyślnie dodano obiekt do bazy");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Coś poszło nie tak: " + ex);
+                }
                 break;
             case 4:
-                float size = getUserInputIntiger("Podaj wielkość pliku");
-                database.add(new audiobook(name,title,author,publicationDate,length,item.setGenre(),size));
+                try {
+                    database.add(new audiobook(
+                            getUserInput("Podaj nazwę audiobooka:"),
+                            getUserInput("Podaj autora:"),
+                            getUserInputIntiger("Podaj rok publikacji: "),
+                            getUserInputIntiger("Podaj długość [Min]: "),
+                            item.setGenre(),
+                            getUserInputIntiger("Podaj rozmiar pliku [Mb]:")));
+                    System.out.println("Pomyślnie dodano obiekt do bazy");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Coś poszło nie tak: " + ex);
+                }
                 break;
             default:
                 System.out.println("Coś poszło nie tak");
@@ -152,6 +185,25 @@ public class Main {
         else System.out.println("Obiekt o id: " + id + " nie istnieje");
     }
     public static void main(String[] args) {
+        int i;
+        for (i = 1; i <= 5; i++) {
+            database.add(new book("Book" + i, "Author" + i, 2023, 200, 10, literaryGenres.SAMOPOMOC, "ISBN" + i));
+        }
+
+        // Add 5 audiobooks
+        for (i = 1; i <= 5; i++) {
+            database.add(new audiobook("Audiobook" + i, "Author" + i, 2023, 180, literaryGenres.KOMEDIA, 10.5f));
+        }
+
+        // Add 5 employees
+        for (i = 1; i <= 5; i++) {
+            database.add(new employee("Employee" + i, genders.MĘŻCZYZNA, 30, "ID" + i, workplaces.ASYSTENT_BIBLIOTEKARZA, 50000));
+        }
+
+        // Add 5 clients
+        for (i = 1; i <= 5; i++) {
+            database.add(new client("Client" + i, genders.KOBIETA, 25, "ID" + i));
+        }
         boolean isRunning = true;
         while (isRunning){
             mainMenu();
@@ -160,8 +212,12 @@ public class Main {
                     newObjectMenu();
                     switch (getUserInput("Wybierz akcję: ")) {//Wybór typu
                         case "1":
+                            System.out.println("Tworzę nowy obiekt typu: użytkownik");
+                            newElement(1);
                             break;
                         case "2":
+                            System.out.println("Tworzę nowy obiekt typu: pracownik");
+                            newElement(2);
                             break;
                         case "3":
                             System.out.println("Tworzę nowy obiekt typu: ksiazka");
@@ -188,8 +244,10 @@ public class Main {
                     displayObjectByTypeMenu();
                     switch (getUserInput("Wybierz akcję: ")) { //Wybór typu
                         case "1":
+                            displayObjectsByType(client.class);
                             break;
                         case "2":
+                            displayObjectsByType(employee.class);
                             break;
                         case "3":
                             displayObjectsByType(book.class);

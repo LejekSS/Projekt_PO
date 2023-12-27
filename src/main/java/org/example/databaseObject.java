@@ -1,15 +1,17 @@
 package org.example;
 
+import java.time.LocalDate;
+
 public abstract class databaseObject {
     private String name;
     private int id;
-    private long date;
+    private LocalDate date;
     private static int lastID = 0;
 
     public databaseObject(String name) {
         this.name = name;
         this.id = ++lastID;
-        this.date = System.currentTimeMillis();
+        this.date = LocalDate.now();
     }
 
     @Override
@@ -31,11 +33,7 @@ public abstract class databaseObject {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public long getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -43,7 +41,4 @@ public abstract class databaseObject {
         return lastID;
     }
 
-    public static void setLastID(int lastID) {
-        databaseObject.lastID = lastID;
-    }
 }
