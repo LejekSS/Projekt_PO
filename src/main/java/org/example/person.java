@@ -12,9 +12,7 @@ public abstract class person extends databaseObject{
         this.age = age;
         this.identityCard = identityCard;
     }
-    public abstract void aged(person osoba){
 
-    }
     public static genders setGender() {
         Scanner scanner = new Scanner(System.in);
         genders gender = null;
@@ -63,4 +61,5 @@ public abstract class person extends databaseObject{
                 ", age=" + age +
                 ", identityCard='" + identityCard + '\'';
     }
+    public abstract void ageup();
 }

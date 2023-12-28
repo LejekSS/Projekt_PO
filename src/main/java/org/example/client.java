@@ -23,4 +23,9 @@ public class client extends person{
         return super.toString() +
                 ", rented=" + Arrays.toString(rented);
     }
+
+    @Override
+    public void ageup() {
+        setAge(getAge()+1);
+    }
 }

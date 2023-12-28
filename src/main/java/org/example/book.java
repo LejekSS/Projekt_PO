@@ -37,44 +37,5 @@ public class book extends item implements IDataStructure{
     }
 
 
-    @Override
-    public void rentItem(client klient, book ksiazka) {
-        if (ksiazka.getQuantity() > 0) {
-            ksiazka.setQuantity(ksiazka.getQuantity() - 1);
-            int[] newRented = Arrays.copyOf(klient.getRented(), klient.getRented().length + 1);
-            newRented[newRented.length - 1] = ksiazka.getId();
-            klient.setRented(newRented);
-            System.out.println("Książka została wypożyczona");
-        } else {
-            System.out.println("Książka jest niedostępna");
-        }
-    }
-
-    @Override
-    public void returnItem(client klient, book ksiazka) {
-        int bookId = ksiazka.getId();
-        int[] rentedBooks = klient.getRented();
-        // Sprawdź, czy klient wypożyczył tę książkę
-        boolean isBookRented = false;
-        for (int i : rentedBooks) {
-            if (i == bookId) {
-                isBookRented = true;
-                break;
-            }
-        }
-        if (isBookRented) {
-            // Klient wypożyczył tę książkę, zwróć ją
-            ksiazka.setQuantity(ksiazka.getQuantity() + 1);
-
-            // Usuń książkę z listy wypożyczonych u klienta
-            int[] updatedRented = Arrays.stream(rentedBooks)
-                    .filter(id -> id != bookId)
-                    .toArray();
-            klient.setRented(updatedRented);
-
-            System.out.println("Książka została pomyślnie zwrócona.");
-        } else {
-            System.out.println("Klient nie wypożyczył tej książki.");
-        }
 }
-}
+

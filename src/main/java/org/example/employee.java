@@ -47,4 +47,10 @@ public class employee extends person{
                 ", position=" + position +
                 ", salary=" + salary;
     }
+
+    @Override
+    public void ageup() {
+            setAge(getAge()+1);
+            setSalary(getSalary()+200);
+    }
 }

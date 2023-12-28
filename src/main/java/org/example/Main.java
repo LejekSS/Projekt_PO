@@ -1,4 +1,5 @@
 package org.example;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class Main {
         System.out.println("3. Wyświetl wszystkie obiekty");
         System.out.println("4. Wyświelt podtyp obiektów");
         System.out.println("5. Wyswietl obiekty o podanym ciągu znaków w nazwie");
-        System.out.println("6. Operacja zawarta w interfejsie");
+        System.out.println("6. Funkcja abstrakcyjna | Funkcja implementowana przez interfejs");
         System.out.println("7. Zakończ");
     }
     private static String getUserInput(String prompt) {
@@ -144,16 +145,6 @@ public class Main {
         }
         waitForAction();
     }
-    public static void rentMenu(){
-        System.out.println("---------------------------------------");
-        System.out.println("158093 | 2 rok 3 semestr | PO - projekt");
-        System.out.println("------------------Menu-----------------");
-        System.out.println("1. Wypożycz książkę");
-        System.out.println("2. Zwróć książke");
-        System.out.println("3. Wypożycz audiobook");
-        System.out.println("4. Zwróć audiobook");
-        System.out.println("5. Cofnij");
-    }
     public static void displayObjectsByType(Class<?> type) {
         List<databaseObject> temp = database.stream()
                 .filter(obj -> type.isAssignableFrom(obj.getClass()))
@@ -194,23 +185,40 @@ public class Main {
         if(removed) System.out.println("Usunieto element od id: "+ id);
         else System.out.println("Obiekt o id: " + id + " nie istnieje");
     }
+    public static void ageUpPerson(int id) {
+        Optional<databaseObject> personOptional = database.stream()
+                .filter(obj -> obj.getId() == id)
+                .findFirst();
+
+        if (personOptional.isPresent()) {
+            databaseObject person = personOptional.get();
+
+            if (person instanceof employee) {
+                ((employee) person).ageup();
+                System.out.println("Wiek oraz pensjka pracownika z ID " + id + " został zaktualizowany.");
+            } else if (person instanceof client) {
+                ((client) person).ageup();
+                System.out.println("Wiek klienta z ID " + id + " został zaktualizowany.");
+            } else {
+                System.out.println("Obiekt o podanym ID nie jest pracownikiem ani klientem.");
+            }
+        } else {
+            System.out.println("Nie znaleziono obiektu o podanym ID.");
+        }
+    }
     public static void main(String[] args) {
         int i;
         for (i = 1; i <= 5; i++) {
             database.add(new book("Book" + i, "Author" + i, 2023, 200, i, literaryGenres.SAMOPOMOC, "ISBN" + i));
         }
-
-
         // Add 5 audiobooks
         for (i = 1; i <= 5; i++) {
             database.add(new audiobook("Audiobook" + i, "Author" + i, 2023, 180, literaryGenres.KOMEDIA, 10));
         }
-
         // Add 5 employees
         for (i = 1; i <= 5; i++) {
             database.add(new employee("Employee" + i, genders.MEZCZYZNA, 30, "ID" + i, workplaces.ASYSTENT_BIBLIOTEKARZA, 50000));
         }
-
         // Add 5 clients
         for (i = 1; i <= 5; i++) {
             database.add(new client("Client" + i, genders.KOBIETA, 25, "ID" + i));
@@ -277,48 +285,19 @@ public class Main {
                     displayObjectsByNameContains(getUserInput("Podaj ciąg znaków: "));
                     break;
                 case "6": //Operacja z interfejstu
-                    rentMenu();
-                    switch (getUserInput("Wybierz opcje:")){
+                    System.out.println("1. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
+                    System.out.println("2. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
+                    switch (getUserInput("Wybierz akcję: ")) { //Wybór typu
                         case "1":
-                            int clientId = getUserInputIntiger("Podaj ID klienta: ");
-                            int bookId = getUserInputIntiger("Podaj ID książki do wypożyczenia: ");
-
-                            if (clientId >= 0 && clientId < database.size() && bookId >= 0 && bookId < database.size()) {
-                                if (database.get(clientId) instanceof client && database.get(bookId) instanceof book) {
-                                    client client = (client) database.get(clientId);
-                                    book book = (book) database.get(bookId);
-
-                                    book.rentItem(client,book.getId());
-                                } else {
-                                    System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                                }
-                            } else {
-                                System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                            }
+                            ageUpPerson(getUserInputIntiger("Podaj id pracownika lub klienta: "));
                             break;
                         case "2":
-                            int clientId2 = getUserInputIntiger("Podaj ID klienta: ");
-                            int bookId2 = getUserInputIntiger("Podaj ID książki do zwrotu: ");
-
-                            if (clientId2 >= 0 && clientId2 < database.size() && bookId2 >= 0 && bookId2 < database.size()) {
-                                if (database.get(clientId2) instanceof client && database.get(bookId2) instanceof book) {
-                                    client client = (client) database.get(clientId2);
-                                    book book = (book) database.get(bookId2);
-                                    book.returnItem(client, book);
-                                } else {
-                                    System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                                }
-                            } else {
-                                System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                            }
-                            break;
-                        case "5":
+                            ageUpPerson(getUserInputIntiger("Podaj id pracownika lub klienta: "));
                             break;
                         default: //Obsługa błędu
-                        System.out.println("Nieprawidlowa opcja");
-                        break;
+                            System.out.println("Nieprawidlowa opcja");
+                            break;
                     }
-
                     break;
                 case "7": //Zakończ
                     isRunning = false;
