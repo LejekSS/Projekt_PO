@@ -36,6 +36,17 @@ public class book extends item implements IDataStructure{
                 ", quantity=" + quantity;
     }
 
+    @Override
+    public void rentItem(client klient, book ksiazka) {
+        if (ksiazka.getQuantity() > 0) {
+            ksiazka.setQuantity(ksiazka.getQuantity() - 1);
+            int[] newRented = Arrays.copyOf(klient.getRented(), klient.getRented().length + 1);
+            newRented[newRented.length - 1] = ksiazka.getId();
+            klient.setRented(newRented);
+        } else {
+            System.out.println("Sorry, the book is not available for rent.");
+        }
+    }
 
 }
 

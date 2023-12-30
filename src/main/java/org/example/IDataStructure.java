@@ -1,4 +1,5 @@
 package org.example;
 
 public interface IDataStructure {
+    public void rentItem(client klient, book ksiazka);
 }
