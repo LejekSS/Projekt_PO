@@ -1,4 +1,4 @@
-package org.example;
+package org.library;
 
 import java.util.Scanner;
 
@@ -70,6 +70,4 @@ public abstract class item extends databaseObject{
                 ", genre=" + genre
                 ;
     }
-
-
 }

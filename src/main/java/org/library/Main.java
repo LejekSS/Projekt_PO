@@ -1,12 +1,57 @@
-package org.example;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
+package org.library;
+import java.util.*;
 
 public class Main {
     static List<databaseObject> database = new ArrayList<>();
+    private static client findClientById(int clientId) {
+        for (databaseObject obj : database) {
+            if (obj instanceof client && ((client) obj).getId() == clientId) {
+                return (client) obj;
+            }
+        }
+        return null;
+    }
+    private static book findBookById(int bookId) {
+        for (databaseObject obj : database) {
+            if (obj instanceof book && ((book) obj).getId() == bookId) {
+                return (book) obj;
+            }
+        }
+        return null;
+    }
+    private static audiobook findAudiobookById(int audiobookId) {
+        for (databaseObject obj : database) {
+            if (obj instanceof audiobook && ((audiobook) obj).getId() == audiobookId) {
+                return (audiobook) obj;
+            }
+        }
+        return null;
+    }
+    private static void rentItem(String name){
+        int clientId = getUserInputIntiger("Podaj ID klienta: ");
+        int ItemId = getUserInputIntiger("Podaj ID książki do wypożyczenia: ");
 
+        if(name == "book") {
+            client client = findClientById(clientId);
+            book book = findBookById(ItemId);
+
+            if (client != null && book != null) {
+                book.rent(client, book);
+            } else {
+                System.out.println("Podano nieprawidłowe ID klienta lub książki.");
+            }
+        }
+        else if(name == "audiobook"){
+            client client = findClientById(clientId);
+            audiobook audiobook = findAudiobookById(ItemId);
+
+            if (client != null && audiobook != null) {
+                audiobook.rent(client, audiobook);
+            } else {
+                System.out.println("Podano nieprawidłowe ID klienta lub Audiobooka.");
+            }
+        }
+    }
     public static void mainMenu() {
         System.out.println("---------------------------------------");
         System.out.println("158093 | 2 rok 3 semestr | PO - projekt");
@@ -19,7 +64,13 @@ public class Main {
         System.out.println("6. Funkcja abstrakcyjna | Funkcja implementowana przez interfejs");
         System.out.println("7. Zakończ");
     }
-
+    private static void interfaceMenu(){
+        System.out.println("1. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
+        System.out.println("2. Funkcja rent() - wykonywana dla klienta z klasy ksiazka");
+        System.out.println("3. Funkcja rent() - wykonywana dla klienta z klasy audiobook");
+        System.out.println("4. Funkcja return() - implementowana przez klase klient");
+        System.out.println("5. Cofnij");
+    }
     private static String getUserInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
@@ -30,7 +81,21 @@ public class Main {
         }
         return userInput;
     }
-
+    private static void returnItem(){
+        int clientId = getUserInputIntiger("Podaj ID klienta: ");
+        client client = findClientById(clientId);
+            if (client != null) {
+                int itemID = client.rertun(client);
+                if (itemID >= 0){
+                    if (findBookById(itemID) != null){
+                        book TempBook = findBookById(itemID);
+                        TempBook.setQuantity(TempBook.getQuantity()+1);
+                    }
+                }
+            } else {
+                System.out.println("Podano nieprawidłowe ID klienta.");
+            }
+        }
     private static int getUserInputIntiger(String prompt) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
@@ -44,10 +109,10 @@ public class Main {
                 System.out.println("Nie podano wartosci licznowej");
                 userInput = "";
             }
+
         }
         return Integer.parseInt(userInput);
     }
-
     public static void newObjectMenu() {
         System.out.println("---------------------------------------");
         System.out.println("158093 | 2 rok 3 semestr | PO - projekt");
@@ -58,7 +123,6 @@ public class Main {
         System.out.println("4. Nowy audiobook");
         System.out.println("5. Cofnij");
     }
-
     public static void displayObjectByTypeMenu() {
         System.out.println("---------------------------------------");
         System.out.println("158093 | 2 rok 3 semestr | PO - projekt");
@@ -69,7 +133,6 @@ public class Main {
         System.out.println("4. Audiobook");
         System.out.println("5. Cofnij");
     }
-
     public static void waitForAction() {
         System.out.println("Naciśnij ENTER, aby kontynuować...");
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +140,6 @@ public class Main {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
     public static void newElement(int type) {
         switch (type) {
             case 1:
@@ -141,7 +203,6 @@ public class Main {
         }
 
     }
-
     public static void displayAllElements() {
         if (database.isEmpty()) System.out.println("Nie znalezniono obiektów do wyświetlenia");
         else {
@@ -153,7 +214,6 @@ public class Main {
         }
         waitForAction();
     }
-
     public static void displayObjectsByType(Class<?> type) {
         List<databaseObject> temp = database.stream()
                 .filter(obj -> type.isAssignableFrom(obj.getClass()))
@@ -168,7 +228,6 @@ public class Main {
         }
         waitForAction();
     }
-
     public static void displayObjectsByNameContains(String substring) {
         List<databaseObject> temp = database.stream()
                 .filter(obj -> obj.getName().contains(substring))
@@ -183,7 +242,6 @@ public class Main {
         }
         waitForAction();
     }
-
     public static void removeObjectById(int id) {
         boolean removed;
         try {
@@ -195,7 +253,6 @@ public class Main {
         if (removed) System.out.println("Usunieto element od id: " + id);
         else System.out.println("Obiekt o id: " + id + " nie istnieje");
     }
-
     public static void ageUpPerson(int id) {
         Optional<databaseObject> personOptional = database.stream()
                 .filter(obj -> obj.getId() == id)
@@ -217,7 +274,6 @@ public class Main {
             System.out.println("Nie znaleziono obiektu o podanym ID.");
         }
     }
-
         public static void main (String[] args)
         {
             int i;
@@ -298,30 +354,21 @@ public class Main {
                         displayObjectsByNameContains(getUserInput("Podaj ciąg znaków: "));
                         break;
                     case "6": //Operacja z interfejstu
-                        System.out.println("1. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
-                        System.out.println("2. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
+                        interfaceMenu();
                         switch (getUserInput("Wybierz akcję: ")) { //Wybór typu
                             case "1":
                                 ageUpPerson(getUserInputIntiger("Podaj id pracownika lub klienta: "));
                                 break;
                             case "2":
-                                int clientId = getUserInputIntiger("Podaj ID klienta: ");
-                                int bookId = getUserInputIntiger("Podaj ID książki do wypożyczenia: ");
-
-                                // Sprawdź, czy ID klienta i książki są prawidłowe
-                                if (clientId >= 0 && clientId < database.size() && bookId >= 0 && bookId < database.size()) {
-                                    if (database.get(clientId) instanceof client && database.get(bookId) instanceof book) {
-                                        client client = (client) database.get(clientId);
-                                        book book = (book) database.get(bookId);
-
-                                        // Wywołaj funkcję wypożyczenia dla klienta
-                                        book.rentItem(client,book);
-                                    } else {
-                                        System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                                    }
-                                } else {
-                                    System.out.println("Podano nieprawidłowe ID klienta lub książki.");
-                                }
+                                rentItem("book");
+                                break;
+                            case "3":
+                                rentItem("audiobook");
+                                break;
+                            case "4":
+                                returnItem();
+                                break;
+                            case "5":
                                 break;
                             default: //Obsługa błędu
                                 System.out.println("Nieprawidlowa opcja");
