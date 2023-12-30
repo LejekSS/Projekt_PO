@@ -18,6 +18,11 @@ public class audiobook extends item{
         this.size = size;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", size=" + size;
+    }
 
     public void rent(client klient, audiobook audiobook) {
             int[] newRented = Arrays.copyOf(klient.getRented(), klient.getRented().length + 1);

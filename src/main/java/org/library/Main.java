@@ -3,6 +3,19 @@ import java.util.*;
 
 public class Main {
     static List<databaseObject> database = new ArrayList<>();
+    private static void testdata(){
+        database.add(new book("Discover Your Potential", "Emma Smith", 1999, 238, 3, literaryGenres.DLA_MLODZIEZY, "ISBN000001"));
+        database.add(new book("Beyond the Horizon", "John Davis", 2001, 138, 2, literaryGenres.SCIENCE_FICTION, "ISBN000002"));
+        database.add(new book("The Art of Mindfulness", "Sophia Roberts", 2022, 390, 1, literaryGenres.NAUKOWA, "ISBN000003"));
+        database.add(new audiobook("Dom po drugiej stronie jeziora", "Rigly Sager", 2023, 182, literaryGenres.KOMEDIA, 4));
+        database.add(new audiobook("Gniew", "Zygmunt Miłoszewski", 2004, 91, literaryGenres.DRAMAT, 8));
+        database.add(new employee("Janusz Jezierski", genders.MEZCZYZNA, 55, "A1233", workplaces.ASYSTENT_BIBLIOTEKARZA, 3200));
+        database.add(new employee("Mariusz Drobniewski", genders.MEZCZYZNA, 31, "C9421", workplaces.BIBLIOTEKARZ, 4000));
+        database.add(new employee("Dariusz Mazurek", genders.MEZCZYZNA, 45, "N11123", workplaces.DYREKTOR, 4500));
+        database.add(new client("Anna Byttner", genders.KOBIETA, 25, "A8723"));
+        database.add(new client("Adam Maciejewski", genders.MEZCZYZNA, 38, "A9352"));
+        database.add(new client("Karolina Jankowska", genders.KOBIETA, 25, "B1211"));
+    }
     private static client findClientById(int clientId) {
         for (databaseObject obj : database) {
             if (obj instanceof client && ((client) obj).getId() == clientId) {
@@ -29,7 +42,7 @@ public class Main {
     }
     private static void rentItem(String name){
         int clientId = getUserInputIntiger("Podaj ID klienta: ");
-        int ItemId = getUserInputIntiger("Podaj ID książki do wypożyczenia: ");
+        int ItemId = getUserInputIntiger("Podaj ID przedmiotu do wypożyczenia: ");
 
         if(name == "book") {
             client client = findClientById(clientId);
@@ -62,7 +75,8 @@ public class Main {
         System.out.println("4. Wyświelt podtyp obiektów");
         System.out.println("5. Wyswietl obiekty o podanym ciągu znaków w nazwie");
         System.out.println("6. Funkcja abstrakcyjna | Funkcja implementowana przez interfejs");
-        System.out.println("7. Zakończ");
+        System.out.println("7. Dodaj dane testowe");
+        System.out.println("8. Zakończ");
     }
     private static void interfaceMenu(){
         System.out.println("1. Funkcja ageUP() - wykonywana dla pracownika lub klienta");
@@ -276,22 +290,6 @@ public class Main {
     }
         public static void main (String[] args)
         {
-            int i;
-            for (i = 1; i <= 5; i++) {
-                database.add(new book("Book" + i, "Author" + i, 2023, 200, i, literaryGenres.SAMOPOMOC, "ISBN" + i));
-            }
-            // Add 5 audiobooks
-            for (i = 1; i <= 5; i++) {
-                database.add(new audiobook("Audiobook" + i, "Author" + i, 2023, 180, literaryGenres.KOMEDIA, 10));
-            }
-            // Add 5 employees
-            for (i = 1; i <= 5; i++) {
-                database.add(new employee("Employee" + i, genders.MEZCZYZNA, 30, "ID" + i, workplaces.ASYSTENT_BIBLIOTEKARZA, 50000));
-            }
-            // Add 5 clients
-            for (i = 1; i <= 5; i++) {
-                database.add(new client("Client" + i, genders.KOBIETA, 25, "ID" + i));
-            }
             boolean isRunning = true;
             while (isRunning) {
                 mainMenu();
@@ -376,6 +374,9 @@ public class Main {
                         }
                         break;
                     case "7": //Zakończ
+                        testdata();
+                        break;
+                    case "8": //Zakończ
                         isRunning = false;
                         break;
                     default: //Obsługa błędu
