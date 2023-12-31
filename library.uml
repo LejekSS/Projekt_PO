@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.library</OriginalElement>
+  <nodes>
+    <node x="160.125" y="179.0">org.library.item</node>
+    <node x="746.678960530397" y="678.0">org.library.client</node>
+    <node x="-143.99186763337468" y="690.0">org.library.audiobook</node>
+    <node x="633.3454651054591" y="1057.0">org.library.IDataStructure</node>
+    <node x="1510.750998371588" y="715.0">org.library.workplaces</node>
+    <node x="519.8247038616626" y="-856.510545905707">org.library.Main</node>
+    <node x="-254.0071339950373" y="276.0">org.library.literaryGenres</node>
+    <node x="1051.369639810794" y="654.0">org.library.employee</node>
+    <node x="1440.0220901830023" y="276.0">org.library.genders</node>
+    <node x="894.5244077233249" y="179.0">org.library.person</node>
+    <node x="582.8247038616626" y="-169.90167493796525">org.library.databaseObject</node>
+    <node x="319.98828125" y="654.0">org.library.book</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.library.audiobook" target="org.library.item" relationship="GENERALIZATION">
+      <point x="183.9998676333747" y="0.0" />
+      <point x="272.0" y="771.0" />
+      <point x="272.0" y="709.5" />
+      <point x="302.488" y="709.5" />
+      <point x="-11.637" y="153.0" />
+    </edge>
+    <edge source="org.library.Main" target="org.library.databaseObject" relationship="TO_MANY">
+      <point x="0.0" y="272.0" />
+      <point x="0.0" y="-141.0" />
+    </edge>
+    <edge source="org.library.person" target="org.library.genders" relationship="TO_ONE">
+      <point x="132.5" y="0.0" />
+      <point x="-99.0" y="0.0" />
+    </edge>
+    <edge source="org.library.person" target="org.library.databaseObject" relationship="GENERALIZATION">
+      <point x="-4.077233249972778E-4" y="-153.0" />
+      <point x="1027.024" y="159.0" />
+      <point x="681.325" y="159.0" />
+      <point x="2.9613833748953766E-4" y="141.0004987593052" />
+    </edge>
+    <edge source="org.library.book" target="org.library.item" relationship="GENERALIZATION">
+      <point x="-189.00028125" y="0.0" />
+      <point x="272.0" y="771.0" />
+      <point x="272.0" y="709.5" />
+      <point x="302.488" y="709.5" />
+      <point x="-11.637" y="153.0" />
+    </edge>
+    <edge source="org.library.item" target="org.library.databaseObject" relationship="GENERALIZATION">
+      <point x="0.0" y="-153.0" />
+      <point x="314.125" y="159.0" />
+      <point x="681.325" y="159.0" />
+      <point x="2.9613833748953766E-4" y="141.0004987593052" />
+    </edge>
+    <edge source="org.library.employee" target="org.library.person" relationship="GENERALIZATION">
+      <point x="-190.99963981079418" y="0.0" />
+      <point x="1028.0" y="771.0" />
+      <point x="1028.0" y="636.5" />
+      <point x="1058.87" y="636.5" />
+      <point x="31.845592276675006" y="153.0" />
+    </edge>
+    <edge source="org.library.item" target="org.library.literaryGenres" relationship="TO_ONE">
+      <point x="-154.0" y="0.0" />
+      <point x="117.0" y="0.0" />
+    </edge>
+    <edge source="org.library.client" target="org.library.person" relationship="GENERALIZATION">
+      <point x="128.00003946960294" y="0.0" />
+      <point x="1028.0" y="771.0" />
+      <point x="1028.0" y="636.5" />
+      <point x="1058.87" y="636.5" />
+      <point x="31.845592276675006" y="153.0" />
+    </edge>
+    <edge source="org.library.client" target="org.library.IDataStructure" relationship="REALIZATION">
+      <point x="-127.99996053039706" y="0.0" />
+      <point x="723.0" y="771.0" />
+      <point x="723.0" y="905.5" />
+      <point x="690.488" y="905.5" />
+      <point x="-24.857465105459028" y="-31.5" />
+    </edge>
+    <edge source="org.library.employee" target="org.library.workplaces" relationship="TO_ONE">
+      <point x="191.0" y="0.0" />
+      <point x="-109.0" y="0.0" />
+    </edge>
+    <edge source="org.library.book" target="org.library.IDataStructure" relationship="REALIZATION">
+      <point x="188.99971875000006" y="0.0" />
+      <point x="723.0" y="771.0" />
+      <point x="723.0" y="905.5" />
+      <point x="690.488" y="905.5" />
+      <point x="-24.857465105459028" y="-31.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="843.2136972704716" y="229.8749999999999" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
