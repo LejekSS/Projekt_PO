@@ -109,6 +109,7 @@ public class Main {
             } else {
                 System.out.println("Podano nieprawidłowe ID klienta.");
             }
+            waitForAction();
         }
     private static int getUserInputIntiger(String prompt) {
         Scanner scanner = new Scanner(System.in);
@@ -215,7 +216,7 @@ public class Main {
                 System.out.println("Coś poszło nie tak");
                 break;
         }
-
+        waitForAction();
     }
     public static void displayAllElements() {
         if (database.isEmpty()) System.out.println("Nie znalezniono obiektów do wyświetlenia");
@@ -234,6 +235,7 @@ public class Main {
                 .toList();
         if (temp.isEmpty()) System.out.println("Nie znalezniono obiektów do wyświetlenia");
         else {
+            System.out.println("xd");
             try {
                 temp.forEach(database -> System.out.println(database.toString()));
             } catch (NullPointerException ex) {
@@ -266,6 +268,7 @@ public class Main {
         }
         if (removed) System.out.println("Usunieto element od id: " + id);
         else System.out.println("Obiekt o id: " + id + " nie istnieje");
+        waitForAction();
     }
     public static void ageUpPerson(int id) {
         Optional<databaseObject> personOptional = database.stream()
@@ -277,7 +280,7 @@ public class Main {
 
             if (person instanceof employee) {
                 ((employee) person).ageup();
-                System.out.println("Wiek oraz pensjka pracownika z ID " + id + " został zaktualizowany.");
+                System.out.println("Wiek oraz pensja pracownika z ID " + id + " został zaktualizowany.");
             } else if (person instanceof client) {
                 ((client) person).ageup();
                 System.out.println("Wiek klienta z ID " + id + " został zaktualizowany.");
@@ -287,6 +290,7 @@ public class Main {
         } else {
             System.out.println("Nie znaleziono obiektu o podanym ID.");
         }
+        waitForAction();
     }
         public static void main (String[] args)
         {
